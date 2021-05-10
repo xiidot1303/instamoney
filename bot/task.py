@@ -130,6 +130,13 @@ def send_proof_photo(update, context):
     bot = context.bot
     try:
         obj = Completed_task.objects.get(user_id=update.message.chat.id, photo='')
+        task  = Task.objects.get(pk=obj.task)
+        task.done += 1
+        task.save()
+        if task.done == task.limit:
+            task.done = 0
+            task.is_open = False
+            task.save()
         p = bot.getFile(update.message.photo[-1].file_id)
         *args, file_name = str(p.file_path).split('/')
         d_photo = p.download('files/photos/completed_tasks/{}'.format(file_name))
