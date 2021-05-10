@@ -8,7 +8,7 @@ from bot.conversationList import *
 from bot.task import *
 from dotenv import load_dotenv
 import os
-
+from app.models import *
 basedir = os.path.abspath(os.path.dirname(''))
 load_dotenv(os.path.join(basedir, '.env'))
 TOKEN = os.environ.get('TOKEN')
@@ -20,6 +20,20 @@ if WHERE == 'SERVER':
 else:
     updater = Updater(token=TOKEN, use_context=True)
     dp = updater.dispatcher
+
+# delete un completed objects ones, after restart
+c_task = Completed_task.objects.filter(photo='')
+output = Output.objects.filter(price=None)
+user = Bot_user.objects.filter(birthday=None)
+for i in c_task:
+    i.delete()
+for i in output:
+    i.delete()
+for i in user:
+    i.delete()
+
+
+
 
 login_handler = ConversationHandler(
     entry_points=[MessageHandler(Filters.text(['продолжить']), next_to_register)],

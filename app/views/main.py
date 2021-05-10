@@ -17,15 +17,7 @@ WHERE = os.environ.get('WHERE')
 
 @csrf_exempt
 def bot_webhook(request):
-    c_task = Completed_task.objects.filter(photo='')
-    output = Output.objects.filter(price=None)
-    user = Bot_user.objects.filter(birthday=None)
-    for i in c_task:
-        i.delete()
-    for i in output:
-        i.delete()
-    for i in user:
-        i.delete()
+
     if WHERE == 'LOCAL':
         updater.start_polling()
     else:
