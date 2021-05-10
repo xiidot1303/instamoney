@@ -1,0 +1,45 @@
+{% extends 'layout/basic.html' %}
+
+{% block section %}
+
+<div class="row" style="width: 80em;">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover" id="userTable">
+                    <thead>
+                        <tr>
+                            <th>Номер телефон</th>
+                            <th>Имя</th>
+                            <th>Дата рождения</th>
+                            <th>Цена</th>
+             
+                        </tr>
+                    </thead>
+                    <tbody>
+          
+                        <tr>
+                            <td>{{ user.phone }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.birthday }}</td>
+                            <td>{{ obj.price }}</td>
+                            
+            
+                           
+
+                        </tr>
+     
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<h4>{{ obj.description }}</h4>
+
+<div class="form-buttons">
+    <a href="{% url 'allow_output' obj.pk %}" class="back-button btn btn-flat bg-green">Подтвердить</a>
+    <a href="{% url 'deny_output' obj.pk %}" class="back-button btn btn-flat bg-red">Отказать</a>
+</div>
+
+{% endblock %}

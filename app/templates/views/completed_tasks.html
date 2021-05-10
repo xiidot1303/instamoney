@@ -1,0 +1,42 @@
+{% extends 'layout/basic.html' %}
+{% block title %}
+{% endblock %}
+{% load index %}
+
+
+{% block section %}
+<div class="row" style="width: 80em;">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover" id="userTable">
+                    <thead>
+                        <tr>
+                            <th>Номер телефон</th>
+                            <th>Имя</th>
+                            <th>Дата рождения</th>
+                            <th>Номер выполненого задания</th>
+                            <th>Фото</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in tasks %}
+                        <tr>
+                            <td>{{ phone_numbers|index:forloop.counter0 }}</td>
+                            <td>{{ names|index:forloop.counter0 }}</td>
+                            <td>{{ birthdays|index:forloop.counter0 }}</td>
+                            <td>{{ t.task }}</td>
+                            <td><a href="/files/{{ t.photo }}" class="btn btn-danger bg-blue" target="_blank"><i class="fas fa-external-link-square-alt"></i></a></td>
+                            <td><a id = "a" href="{% url 'done_task' t.pk task %}" onclick="return confirm(&#39;Вы уверены?&#39;)" class="btn btn-danger btn-flat bg-green"><i class="fas fa-check-circle" aria-hidden="true"></i></a>
+                            <a id = "a" href="{% url 'denied_task' t.pk task %}"  class="btn btn-danger btn-flat bg-red" onclick="return confirm(&#39;Вы уверены?&#39;)"><i class="fas fa-window-close"></i></a></td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

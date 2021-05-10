@@ -1,0 +1,35 @@
+{% extends 'layout/basic.html' %}
+{% block section %}
+
+
+<div class="row add-button">
+    <div class="col-xs-10">
+        <a href="{% url 'completed_task' object.pk %}" class="btn btn-flat bg-orange"><i class=""></i>Выполненные задания</a>
+    </div>
+
+</div>
+
+<div class="box">
+        <div class="box-body">
+            <form method = "post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      
+                      {{ field.errors }} 
+                      {{ field.label_tag }} {{ field }}
+
+                </div>
+            </div>
+            {% endfor %}
+            <div class="col-md-6 col-sm-12">
+            <div class="form-buttons">
+                <input class="save-button btn btn-flat bg-orange" id="submit" name="submit" type="submit" value="Изменить">
+            </div>
+            </div>
+            </form>
+            
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'layout/basic.html' %}
+{% block title %}Деталь{% endblock %}
+{% block section %}
+
+<h1>Успешно добавлен новая задания</h1>
+<h2>ID: {{ ID }}</h2>
+<h3>Ссылка: {{ object.url }}</h3>
+<h3>Описания: {{ object.description }}</h3>
+
+<p class="btn btn-flat bg-orange"><a href="{% url 'all_tasks' %}" style="color: whitesmoke;">Домой</a></p>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'layout/basic.html' %}
+{% block title %}
+Все задания
+{% endblock %}
+
+
+
+{% block section %}
+<div class="row" style="width: 80em;">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover" id="userTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ссылка</th>
+                            <th>Фото</th>
+                            <th>Цена</th>
+                        
+                            <th>Активность</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in tasks %}
+                        <tr>
+                            <td>{{ t.pk }}</td>
+                            <td><a href="{{ t.url }}" class="btn btn-danger bg-yellow" target="_blank"><i class="fab fa-instagram"></i></a></td>
+                            <td>
+                                {% if t.photo %}
+                                <a href="files/{{ t.photo }}" class="btn btn-danger bg-blue" target="_blank"><i class="fas fa-external-link-square-alt"></i></a>
+                                {% else %}
+                                {% endif %}
+                            </td>
+                            <td>{{ t.price }}</td>
+                            
+                            <td>
+                                {% if t.is_open %}
+                                <a href="{% url 'turn_on_off_task' t.pk %}" class="btn btn-danger bg-green"><i class="fas fa-toggle-on"></i></a>
+                                {% else %}
+                                <a href="{% url 'turn_on_off_task' t.pk %}" class="btn btn-danger bg-red"><i class="fas fa-toggle-off"></i></a>
+                                {% endif %}
+                            </td>
+                            <td><a id = "a" href="{% url 'delete_task' t.pk %}" onclick="return confirm(&#39;Вы уверены?&#39;)" class="btn btn-danger btn-flat"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                            <a id = "a" href="{% url 'update_task' t.pk %}"  class="btn btn-danger btn-flat"><i class="fas fa-edit"></i></a></td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

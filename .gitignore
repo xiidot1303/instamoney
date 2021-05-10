@@ -1,0 +1,12 @@
+.env
+db.sqlite3
+app/__pycache__
+app/migrations
+app/views/__pycache__
+app/templatetags/__pycache__
+views/__init__.py
+bot/__pycache__
+instagrambot/__pycache__
+instagrambot/__init__.py
+staticfiles
+files
