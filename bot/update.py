@@ -13,7 +13,7 @@ basedir = os.path.abspath(os.path.dirname(''))
 load_dotenv(os.path.join(basedir, '.env'))
 TOKEN = os.environ.get('TOKEN')
 WHERE = os.environ.get('WHERE')
-
+bot_obj = Bot(TOKEN)
 if WHERE == 'SERVER':
     updater = 1213
     dp = Dispatcher(bot_obj, None, workers=0, use_context=True)
