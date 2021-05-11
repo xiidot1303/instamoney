@@ -33,6 +33,9 @@ def send_output_description(update, context):
     return SEND_OUTPUT_PRICE
 
 def send_output_price(update, context):
+    if Bot_user.objects.get(user_id=update.message.chat.id).balance < float(update.message.text):
+        update.message.reply_text('Недостаточно сумма\nВведите другую сумму')
+        return SEND_OUTPUT_PRICE
     obj = Output.objects.get(user_id=update.message.chat.id)
     obj.price = float(update.message.text)
     obj.save()

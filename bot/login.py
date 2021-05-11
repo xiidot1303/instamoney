@@ -12,7 +12,7 @@ def next_to_register(update, context):
 def send_name(update, context):
     obj = Bot_user.objects.create(user_id=update.message.chat.id, name=update.message.text)
     i_contact = KeyboardButton(text='Оставить номер телефона', request_contact=True)
-    update.message.reply_text('Оставьте свой номер телефона и кнопка', reply_markup=ReplyKeyboardMarkup([[i_contact]], resize_keyboard=True))
+    update.message.reply_text('Оставьте свой номер телефона', reply_markup=ReplyKeyboardMarkup([[i_contact]], resize_keyboard=True))
     return SEND_CONTACT
 
 def send_contact(update, context):
@@ -20,7 +20,11 @@ def send_contact(update, context):
         phone_number = update.message.text
     else:
         phone_number = update.message.contact.phone_number
-    
+    # check that phone is available or no
+    is_available = Bot_user.objects.filter(phone=phone_number)
+    if is_available:
+        update.message.reply_text('Этот номер уже зарегистрирован. Введите другой номер')
+        return SEND_CONTACT
     obj = Bot_user.objects.get(user_id=update.message.chat.id)
     obj.phone = phone_number
     obj.save()

@@ -44,8 +44,8 @@ urlpatterns = [
     
 
     #background
-    path('done_task/<int:id>/<int:redirect_id>/', done_task, name='done_task'),
-    path('denied_task/<int:id>/<int:redirect_id>/', denied_task, name='denied_task'),
+    path('done_task/<int:id>/<int:redirect_id>/<str:user>/', done_task, name='done_task'),
+    path('denied_task/<int:id>/<int:redirect_id>/<str:user>/', denied_task, name='denied_task'),
 
     path('allow_output/<int:pk>/', allow_output, name = 'allow_output'),
     path('deny_output/<int:pk>/', deny_output, name = 'deny_output'),
@@ -60,7 +60,7 @@ urlpatterns = [
     path('turn_on_of_task/<int:pk>/', turn_on_off_task, name='turn_on_off_task'),
 
     #completed_task
-    path('completed_task/<int:task>/', completed_tasks, name='completed_task'),
+    path('completed_task/<int:task>/<str:user_and_phone>/', completed_tasks, name='completed_task'),
 
     #Output
     path('outputs', outputs, name='outputs'),
