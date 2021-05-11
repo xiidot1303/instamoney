@@ -49,14 +49,14 @@ def completed_tasks(request, task, user_and_phone):
         if user_and_phone == 'Все':
             tasks = Completed_task.objects.exclude(photo='')
         else:
-            name, phone = str(user_and_phone).split()
+            *name, phone = str(user_and_phone).split()
             user_id = Bot_user.objects.get(phone=phone).user_id
             tasks = Completed_task.objects.filter(user_id=user_id).exclude(photo='')
     else:
         if user_and_phone == 'Все':
             tasks = Completed_task.objects.filter(task=task).exclude(photo='')
         else:
-            name, phone = str(user_and_phone).split()
+            *name, phone = str(user_and_phone).split()
             user_id = Bot_user.objects.get(phone=phone).user_id
             tasks = Completed_task.objects.filter(task=task, user_id=user_id).exclude(photo='')
     phone_numbers = [Bot_user.objects.get(user_id=i.user_id).phone for i in tasks]
