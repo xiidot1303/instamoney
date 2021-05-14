@@ -6,7 +6,7 @@ class Bot_user(models.Model):
     phone = models.CharField(null=True, blank=True, max_length=40)
     birthday = models.CharField(null=True, blank=True, max_length=100)
     balance = models.FloatField(null=True, blank=True, default=0)
-    #c_task = models.IntegerField(null=True, blank = True, default=0)
+    c_task = models.IntegerField(null=True, blank = True, default=0)
     date = models.DateTimeField(db_index = True, null=True, auto_now_add=True, blank=True)
 
 
