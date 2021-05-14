@@ -15,5 +15,5 @@ def main_menu(update, context):
         www= 0 # do nothing
     
     bot = context.bot
-    bot.send_message(update.message.chat.id, 'Главное меню', reply_markup=ReplyKeyboardMarkup(keyboard=[['Начать задание 📝'], ['Вывод 📥'], ['Баланс 💰']], resize_keyboard=True))
+    bot.send_message(update.message.chat.id, 'Главное меню', reply_markup=ReplyKeyboardMarkup(keyboard=[['Доступные задания 📝'], ['Вывод 📥'], ['Баланс 💰']], resize_keyboard=True))
 

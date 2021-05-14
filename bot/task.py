@@ -99,8 +99,8 @@ def select_task(update, context):
 
     bot.delete_message(update.message.chat.id, update.message.message_id)
     task = Task.objects.get(pk=int(data))
-    text = task.description + '\n\nЦена:' + str(task.price)
-    i_link = InlineKeyboardButton(text='Начать', url=task.url)
+    text = task.description + '\n' + task.url + '\n\nЦена:' + str(task.price)
+    #i_link = InlineKeyboardButton(text='Начать', url=task.url)
     if task.photo != '':
         try:
             bot.send_photo(update.message.chat.id, task.photo)

@@ -17,7 +17,7 @@ def request_money(update, context):
         i.delete()
     #___________________________
     Output.objects.create(user_id=update.message.chat.id)
-    update.message.reply_text('Отправьте реквизиты', reply_markup=ReplyKeyboardMarkup(keyboard=[['Назад']], resize_keyboard=True))
+    update.message.reply_text('Введите номер вашей карты', reply_markup=ReplyKeyboardMarkup(keyboard=[['Назад']], resize_keyboard=True))
     return SEND_OUTPUT_DESCRIPTION
 
 def send_output_description(update, context):
@@ -29,7 +29,7 @@ def send_output_description(update, context):
     obj = Output.objects.get(user_id=update.message.chat.id, description=None)
     obj.description=update.message.text
     obj.save()
-    update.message.reply_text('Введите сумму денег', reply_markup=ReplyKeyboardRemove(remove_keyboard=True))
+    update.message.reply_text('Введите сумму, которую вы хотите вывести', reply_markup=ReplyKeyboardRemove(remove_keyboard=True))
     return SEND_OUTPUT_PRICE
 
 def send_output_price(update, context):
@@ -40,10 +40,10 @@ def send_output_price(update, context):
         obj = Output.objects.get(user_id=update.message.chat.id, price=None)
         obj.price = float(update.message.text)
         obj.save()
-        update.message.reply_text('Ваша заявка принята и проходит модерацию')
+        update.message.reply_text('Ваша заявка на вывод денег принята и находится на проверке. Вы получите ответ, сразу после проверки администратором.')
         main_menu(update, context)
         return ConversationHandler.END
 
     except:
-        update.message.reply_text('Введите сумму денег')
+        update.message.reply_text('Введите сумму!')
         return SEND_OUTPUT_PRICE

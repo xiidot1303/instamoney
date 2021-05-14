@@ -48,7 +48,7 @@ login_handler = ConversationHandler(
 )
 
 begin_task = ConversationHandler(
-    entry_points = [MessageHandler(Filters.text(['Начать задание 📝']), task_list)], 
+    entry_points = [MessageHandler(Filters.text(['Доступные задания 📝']), task_list)], 
     states = {
         SELECT_TASK: [CallbackQueryHandler(select_task)],
         SEND_PROOF: [MessageHandler(Filters.text(['🏁☑️', 'Назад']), send_proof)],
