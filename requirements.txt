@@ -2,3 +2,4 @@ python-telegram-bot
 django
 python-dotenv
 requets
+datetime

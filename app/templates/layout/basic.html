@@ -67,9 +67,7 @@
                           
                             
                         </ul>
-                        
-                        
-
+                      
 
                     </li>
                    
@@ -80,7 +78,12 @@
                         </ul>
                       </li>
 
-
+                      <li class=""><div class="link"><a> <i class="fas fa-users icon"></i>Кол. пользователей</a><i class="fa fa-chevron-down" style="color: white;"></i></div>
+                        <ul class="submenu">
+                          <li><a href="{% url 'bot_users' 'все' %}"><i class="fad fa-ball-pile"></i> всего</a></li>
+                          <li><a href="{% url 'bot_users' 'за сегодня' %}"><i class="fad fa-ball-pile"></i>за сегодня</a></li>
+                        </ul>
+                      </li>
                 </ul>
             </section>
         </aside>

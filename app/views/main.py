@@ -9,6 +9,7 @@ from app.models import *
 import requests
 import json
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 basedir = os.path.abspath(os.path.dirname(''))
 load_dotenv(os.path.join(basedir, '.env'))
@@ -81,4 +82,17 @@ def view_output(request, pk):
     user = Bot_user.objects.get(user_id=obj.user_id)
     context = {'obj': obj, 'user': user}
     return render(request, 'views/view_output.html', context)
+
+
+@login_required
+def bot_users(request, filter):
+    if filter == 'все':
+        users = Bot_user.objects.all().exclude(birthday=None)
+    elif filter == 'за сегодня':
+        today = datetime.now()
+        users = Bot_user.objects.all().filter(date__date=today.date()).exclude(birthday=None)
+    name_and_phones = [i.name + ' ' + i.phone for i in users]
+    context = {'users': users, 'filter': filter, 'name_and_phones': name_and_phones}
+    return render(request, 'views/bot_users.html', context)
+
 

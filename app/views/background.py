@@ -26,6 +26,7 @@ def done_task(request, id, redirect_id, user):
     
     task = Task.objects.get(pk=c_task.task)   # get current task
     bot_user.balance += task.price
+    bot_user.c_task += 1
     bot_user.save()
     c_task.delete()
     # send message to user

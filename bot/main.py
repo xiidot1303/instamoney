@@ -26,3 +26,20 @@ def start(update, context):
 def balance(update, context):
     user = Bot_user.objects.get(user_id=update.message.chat.id)
     update.message.reply_text('Ваш баланс:\n\n{}'.format(user.balance))
+
+def cancel(update, context):
+    bot = context.bot
+    if not Bot_user.objects.filter(user_id=update.message.chat.id):
+        c_task = Completed_task.objects.filter(photo='', user_id=update.message.chat.id)
+        output = Output.objects.filter(price=None, user_id=update.message.chat.id)
+
+        for i in c_task:
+            i.delete()
+        for i in output:
+            i.delete()
+        
+
+        get = update.message.reply_text('Нажмите /start для повторного входа в бота', reply_markup=ReplyKeyboardMarkup(keyboard=[['/start']], resize_keyboard=True))
+        bot.delete_message(update.message.chat.id, get.message_id-2)
+        bot.delete_message(update.message.chat.id, get.message_id-1)
+        return ConversationHandler.END

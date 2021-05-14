@@ -65,6 +65,10 @@ urlpatterns = [
     #Output
     path('outputs', outputs, name='outputs'),
     path('view_output/<int:pk>/', view_output, name='view_output'),
+
+    #Bot users
+    path('bot_users/<str:filter>/', bot_users, name='bot_users'), #the list of bot users
+    path('delete_user/<int:pk>/<str:redirect_filter>/', delete_user, name='delete_user'),
     
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

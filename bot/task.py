@@ -106,7 +106,7 @@ def select_task(update, context):
             bot.send_photo(update.message.chat.id, task.photo)
         except:
             qwqwq = 0
-    bot.send_message(update.message.chat.id, text, reply_markup=InlineKeyboardMarkup([[i_link]]))
+    bot.send_message(update.message.chat.id, text)
     bot.send_message(update.message.chat.id, 'После выполнения задания, нажмите кнопку 🏁☑️', reply_markup=ReplyKeyboardMarkup(keyboard=[['🏁☑️'], ['Назад']], resize_keyboard=True))
 
     # set data

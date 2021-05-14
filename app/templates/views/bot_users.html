@@ -1,0 +1,75 @@
+{% extends 'layout/basic.html' %}
+{% load index %}
+{% load static %}
+
+{% block link %}
+
+<link rel="stylesheet" href="{% static 'app/form.css' %}">
+
+{% endblock %}
+{% block active %}
+
+<nav class="dropdownmenu">
+    <ul>
+
+      <li><a style="padding: 10px 60px 10px 60px;">{{ filter }}</a>
+        <ul id="submenyu">
+          <li><a href="{% url 'bot_users' 'все' %}">все</a></li>
+          <li><a href="{% url 'bot_users' 'за сегодня' %}">за сегодня</a></li>
+          
+      
+        </ul>
+      </li>
+
+    </ul>
+</nav>
+
+{% endblock %}
+
+
+
+{% block section %}
+
+
+
+
+
+<div class="row" style="width: 80em;">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover" id="userTable">
+                    <thead>
+                        <tr>
+                            
+                            <th>Имя</th>
+                            <th>Дата регистрации</th>
+                            <th>Баланс</th>
+                            <th>Номер телефон</th>
+                            <th>Кол. выполненных заданий</th>
+                            <th>Действия</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in users %}
+                        <tr>
+                            <th>{{ u.name }}</th>
+                            <th>{{ u.date|date:"d.m.Y" }}</th>
+                            <th>{{ u.balance }}</th>
+                            <th>{{ u.phone }}</th>
+                            <th>{{ u.c_task }}</th>
+                            <td><a id = "a" href="{% url 'delete_user' u.pk filter %}" onclick="return confirm(&#39;Вы уверены?&#39;)" class="btn btn-danger btn-flat bg-red"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                            <a id = "a" href="{% url 'completed_task' 0 name_and_phones|index:forloop.counter0 %}"  class="btn btn-danger btn-flat bg-red">Задания</a></td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
