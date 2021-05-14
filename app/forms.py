@@ -6,8 +6,9 @@ from django import forms
 class TaskForm(ModelForm):
     class Meta:
         model = Task
-        fields = {'url', 'photo', 'description', 'price', 'limit'}
+        fields = {'title', 'url', 'photo', 'description', 'price', 'limit'}
         widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
             'url': forms.TextInput(attrs={'class': 'form-control'}),
             'photo': forms.FileInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}), 
@@ -15,6 +16,7 @@ class TaskForm(ModelForm):
             'limit': forms.TextInput(attrs={'class': 'form-control'}),
         }
         labels = {
+            'title': 'Названия',
             'url': 'Ссылка', 
             'photo': 'Фото', 
             'description': 'Описания', 
@@ -22,4 +24,4 @@ class TaskForm(ModelForm):
             'limit': 'Лимит'
             
         }
-    field_order = ['url', 'photo', 'description', 'price', 'limit']
+    field_order = ['title', 'url', 'photo', 'description', 'price', 'limit']

@@ -15,7 +15,7 @@ def task_list(update, context):
     items = []
     for i in all_tasks:
         if len(items) <= 10:
-            items.append([InlineKeyboardButton(text=str(i.pk), callback_data=str(i.pk))])
+            items.append([InlineKeyboardButton(text=str(i.title), callback_data=str(i.pk))])
         else:
             items.append([InlineKeyboardButton(text='➡️', callback_data='next_2')])
             break
@@ -53,7 +53,7 @@ def select_task(update, context):
         ls = [] # new list
         for i in tasks[breaknvalues:]:
             if len(ls) <= 10:
-                ls.append([InlineKeyboardButton(text=str(i.pk), callback_data=str(i.pk))])
+                ls.append([InlineKeyboardButton(text=str(i.title), callback_data=str(i.pk))])
             else:
                 nn = str(int(n)+1) # next n 
                 pn = str(int(n)-1) # previous n
@@ -76,7 +76,7 @@ def select_task(update, context):
         ls = []
         for i in tasks:
             if len(ls) <= 10:
-                ls.append([InlineKeyboardButton(text=str(i.pk), callback_data=str(i.pk))])
+                ls.append([InlineKeyboardButton(text=str(i.title), callback_data=str(i.pk))])
             else:
                 nn = str(int(n)+1) # next n 
                 pn = str(int(n)-1) # previous n
