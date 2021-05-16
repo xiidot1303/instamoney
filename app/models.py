@@ -26,6 +26,7 @@ class Completed_task(models.Model):
     task = models.IntegerField(null=True, blank=True)
     photo = models.FileField(upload_to='photos/completed_tasks/', null=True, blank=True)
     date = models.DateTimeField(db_index = True, null=True, auto_now_add=True, blank=True)
+    status = models.CharField(null=True, blank=True, max_length=20, default='waiting')
 
 class Output(models.Model): # request money
     user_id = models.IntegerField(null=True, blank=True)
