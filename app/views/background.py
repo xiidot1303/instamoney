@@ -28,7 +28,8 @@ def done_task(request, id, redirect_id, user):
     bot_user.balance += task.price
     bot_user.c_task += 1
     bot_user.save()
-    c_task.delete()
+    c_task.status = 'done'
+    c_task.save()
     # send message to user
     bot = telegram.Bot(token=TOKEN)
     try:
@@ -41,7 +42,8 @@ def done_task(request, id, redirect_id, user):
 def denied_task(request, id, redirect_id, user):
     c_task = Completed_task.objects.get(pk=id) # get completed task that should delete
     bot_user = Bot_user.objects.get(user_id=c_task.user_id) # current bot user that created current task
-    c_task.delete()
+    c_task.status = 'denied'
+    c_task.save()
     # send message to user
     bot = telegram.Bot(token=TOKEN)
     try:

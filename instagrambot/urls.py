@@ -69,6 +69,9 @@ urlpatterns = [
     #Bot users
     path('bot_users/<str:filter>/', bot_users, name='bot_users'), #the list of bot users
     path('delete_user/<int:pk>/<str:redirect_filter>/', delete_user, name='delete_user'),
+
+    #checked task
+    path('checked_tasks/<int:user>/', checked_tasks, name='checked_tasks'),
     
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

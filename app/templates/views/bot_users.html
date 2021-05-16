@@ -60,7 +60,7 @@
                             <th>{{ u.phone }}</th>
                             <th>{{ u.c_task }}</th>
                             <td><a id = "a" href="{% url 'delete_user' u.pk filter %}" onclick="return confirm(&#39;Вы уверены?&#39;)" class="btn btn-danger btn-flat bg-red"><i class="fas fa-trash" aria-hidden="true"></i></a>
-                            <a id = "a" href="{% url 'completed_task' 0 name_and_phones|index:forloop.counter0 %}"  class="btn btn-danger btn-flat bg-red">Задания</a></td>
+                            <a id = "a" href="{% url 'checked_tasks' u.user_id %}"  class="btn btn-danger btn-flat bg-red">Задания</a></td>
 
                         </tr>
                         {% endfor %}

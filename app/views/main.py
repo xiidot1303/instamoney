@@ -48,18 +48,18 @@ def all_tasks(request):
 def completed_tasks(request, task, user_and_phone):
     if task == 0:
         if user_and_phone == 'Все':
-            tasks = Completed_task.objects.exclude(photo='')
+            tasks = Completed_task.objects.filter(status='waiting').exclude(photo='')
         else:
             *name, phone = str(user_and_phone).split()
             user_id = Bot_user.objects.get(phone=phone).user_id
-            tasks = Completed_task.objects.filter(user_id=user_id).exclude(photo='')
+            tasks = Completed_task.objects.filter(user_id=user_id, status='waiting').exclude(photo='')
     else:
         if user_and_phone == 'Все':
-            tasks = Completed_task.objects.filter(task=task).exclude(photo='')
+            tasks = Completed_task.objects.filter(task=task, status='waiting').exclude(photo='')
         else:
             *name, phone = str(user_and_phone).split()
             user_id = Bot_user.objects.get(phone=phone).user_id
-            tasks = Completed_task.objects.filter(task=task, user_id=user_id).exclude(photo='')
+            tasks = Completed_task.objects.filter(task=task, user_id=user_id, status='waiting').exclude(photo='')
     phone_numbers = [Bot_user.objects.get(user_id=i.user_id).phone for i in tasks]
     names = [Bot_user.objects.get(user_id=i.user_id).name for i in tasks]
     birthdays = [Bot_user.objects.get(user_id=i.user_id).birthday for i in tasks]
@@ -96,3 +96,10 @@ def bot_users(request, filter):
     return render(request, 'views/bot_users.html', context)
 
 
+@login_required
+def checked_tasks(request, user):
+    tasks = Completed_task.objects.filter(user_id=user).exclude(status='waiting')
+    phone_number = Bot_user.objects.get(user_id=user).phone 
+    name = Bot_user.objects.get(user_id=user).name
+    context = {'tasks': tasks, 'name': name, 'phone_number': phone_number}
+    return render(request, 'views/checked_tasks.html', context)
