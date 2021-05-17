@@ -9,21 +9,6 @@
 {% endblock %}
 {% block active %}
 
-<nav class="dropdownmenu">
-    <ul>
-
-      <li><a style="padding: 10px 60px 10px 60px;">{{ filter }}</a>
-        <ul id="submenyu">
-          <li><a href="{% url 'bot_users' 'все' %}">все</a></li>
-          <li><a href="{% url 'bot_users' 'за сегодня' %}">за сегодня</a></li>
-          
-      
-        </ul>
-      </li>
-
-    </ul>
-</nav>
-
 {% endblock %}
 
 
@@ -34,9 +19,30 @@
 
 
 
-<div class="row" style="width: 80em;">
+<div class="row">
     <div class="col-xs-12">
         <div class="box">
+            <div class="box-header">
+                <h4 class="box-title">Все пользователи ботов</h4>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px">
+                        <!-- <nav class="dropdownmenu">
+                            <ul>
+                        
+                              <li><a style="padding: 5px 160px 5px 110px;">{{ filter }}</a>
+                                <ul id="submenyu">
+                                  <li><a href="{% url 'bot_users' 'все' %}">все</a></li>
+                                  <li><a href="{% url 'bot_users' 'за сегодня' %}">за сегодня</a></li>
+                                  
+                              
+                                </ul>
+                              </li>
+                        
+                            </ul>
+                        </nav> -->
+                    </div>
+                </div>
+            </div>
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover" id="userTable">
                     <thead>

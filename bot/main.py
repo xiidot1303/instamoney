@@ -20,12 +20,12 @@ def start(update, context):
             bot = context.bot
             bot.delete_message(update.message.chat.id, update.message.message_id)
     else:
-        update.message.reply_text('Описание бота', reply_markup=ReplyKeyboardMarkup(keyboard=[['продолжить']], resize_keyboard=True))
+        update.message.reply_text('Приветствую. Это бот для заработка в Инстаграмме. Тут будут появляться задания, выполнив которые вы будете получать вознаграждение. Цены за задания варируются от 200 до 1000 сумм. Минимальная сумма для вывода: 5000 сумм. Выводим на узкард. Успехов!', reply_markup=ReplyKeyboardMarkup(keyboard=[['продолжить']], resize_keyboard=True))
 
 
 def balance(update, context):
     user = Bot_user.objects.get(user_id=update.message.chat.id)
-    update.message.reply_text('Ваш баланс:\n\n{}'.format(user.balance))
+    update.message.reply_text('Ваш баланс:\n\n{} сумм'.format(user.balance))
 
 def cancel(update, context):
     bot = context.bot

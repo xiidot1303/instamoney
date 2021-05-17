@@ -11,6 +11,8 @@ def task_list(update, context):
     bot = context.bot
 
     all_tasks = Task.objects.filter(is_open=True).order_by('pk')
+    for i in Completed_task.objects.filter(user_id=update.message.chat.id):
+        all_tasks = all_tasks.exclude(pk=i.task)
     
     items = []
     for i in all_tasks:
@@ -49,6 +51,8 @@ def select_task(update, context):
     if 'next' in data:
         ttt, n = data.split('_') # ttt is word 'next' , n is page number
         tasks = Task.objects.filter(is_open=True).order_by('pk')
+        for i in Completed_task.objects.filter(user_id=update.message.chat.id):
+            tasks = tasks.exclude(pk=i.task)
         breaknvalues = (int(n) - 1) * 11
         ls = [] # new list
         for i in tasks[breaknvalues:]:
@@ -73,6 +77,8 @@ def select_task(update, context):
         ttt, n = data.split('_') # n is page number
         breaknvalues = (int(n) - 1) * 9
         tasks = Task.objects.filter(is_open=True).order_by('pk')
+        for i in Completed_task.objects.filter(user_id=update.message.chat.id):
+            tasks = tasks.exclude(pk=i.task)
         ls = []
         for i in tasks:
             if len(ls) <= 10:
