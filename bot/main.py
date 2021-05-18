@@ -43,3 +43,6 @@ def cancel(update, context):
         bot.delete_message(update.message.chat.id, get.message_id-2)
         bot.delete_message(update.message.chat.id, get.message_id-1)
         return ConversationHandler.END
+
+def service_support(update, context):
+    update.message.reply_text('Если у вас возникли вопросы или проблемы, пожалуйста свяжитесь с администратором\n\n@Gleb_ForexMaster')
