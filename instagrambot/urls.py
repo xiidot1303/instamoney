@@ -72,6 +72,9 @@ urlpatterns = [
 
     #checked task
     path('checked_tasks/<int:user>/', checked_tasks, name='checked_tasks'),
+
+    #send message
+    path('send_message/<str:issent>/', sendmessage, name='send_message')
     
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

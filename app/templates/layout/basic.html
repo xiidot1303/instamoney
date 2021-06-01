@@ -80,8 +80,9 @@
 
                       <li class=""><div class="link"><a> <i class="fas fa-users icon"></i>Кол. пользователей</a><i class="fa fa-chevron-down" style="color: white;"></i></div>
                         <ul class="submenu">
-                          <li><a href="{% url 'bot_users' 'все' %}"><i class="fad fa-ball-pile"></i> всего</a></li>
-                          <li><a href="{% url 'bot_users' 'за сегодня' %}"><i class="fad fa-ball-pile"></i>за сегодня</a></li>
+                          <li><a href="{% url 'bot_users' 'все' %}"><i class="fas fa-globe-asia" style="color: seashell;"></i> Всего</a></li>
+                          <li><a href="{% url 'bot_users' 'за сегодня' %}"><i class="fas fa-calendar-week" style="color: seashell;"></i>За сегодня</a></li>
+                          <li><a href="{% url 'send_message' 'no' %}"><i class="fa fa-envelope" style="color: seashell;"></i>Отправить сообщения</a></li>
                         </ul>
                       </li>
                 </ul>
