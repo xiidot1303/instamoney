@@ -93,16 +93,22 @@ def sendmessage(request, issent):
     if request.method == 'POST':
         bbf = SendmessageForm(request.POST, request.FILES)
         if bbf.is_valid():
-            print('heyy')
             if bbf.cleaned_data['select'] == 'Все':
+                
                 msg = bbf.cleaned_data['message']
                 photo = bbf.cleaned_data['photo']
+                
                 users = Bot_user.objects.all()
                 for u in users:
                     my_token = TOKEN
                     bot = telegram.Bot(token=my_token)
+                    
+                    
+
+
                     try:
-                        bot.sendPhoto(chat_id=u.user_id, photo=photo, caption=msg)
+                        mess = bot.sendPhoto(chat_id=u.user_id, photo=photo, caption=msg)
+                        photo = mess['photo'][0]['file_id']
                     except:
                         fewfwe = 0
 
