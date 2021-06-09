@@ -22,7 +22,7 @@ def task_list(update, context):
             items.append([InlineKeyboardButton(text='➡️', callback_data='next_2')])
             break
     if len(items) == 0:
-        update.message.reply_text('Нет задания 🙅‍♂️')
+        update.message.reply_text('На данный момент заданий нет, но скоро они появятся. Заходите раз в день и проверяйте о наличии заданий.')
         return ConversationHandler.END
     
     items.append([InlineKeyboardButton(text='Назад', callback_data='back')])
