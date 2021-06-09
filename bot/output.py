@@ -11,6 +11,13 @@ import os
 
 
 def request_money(update, context):
+    bot = context.bot
+    # checking that conversition is in proccess or not
+    for dict in context.job_queue._dispatcher.persistence.conversations:
+        conv = context.job_queue._dispatcher.persistence.conversations[dict]
+        if conv[(update.message.chat.id, update.message.chat.id)] != None and update.message.text != 'Назад':
+            bot.delete_message(update.message.chat.id, update.message.message_id)
+            return
     # delete unfinished objects
     del_msg = Output.objects.filter(price=None, user_id=update.message.chat.id)
     for i in del_msg:
@@ -19,8 +26,11 @@ def request_money(update, context):
     Output.objects.create(user_id=update.message.chat.id)
     update.message.reply_text('Введите номер вашей карты', reply_markup=ReplyKeyboardMarkup(keyboard=[['Назад']], resize_keyboard=True))
     return SEND_OUTPUT_DESCRIPTION
+    
 
 def send_output_description(update, context):
+    print(context.chat_data)
+    
     if update.message.text == 'Назад':
         obj = Output.objects.get(user_id=update.message.chat.id, description=None)
         obj.delete()

@@ -24,6 +24,13 @@ def start(update, context):
 
 
 def balance(update, context):
+    bot = context.bot
+    # checking that conversition is in proccess or not
+    for dict in context.job_queue._dispatcher.persistence.conversations:
+        conv = context.job_queue._dispatcher.persistence.conversations[dict]
+        if conv[(update.message.chat.id, update.message.chat.id)] != None:
+            bot.delete_message(update.message.chat.id, update.message.message_id)
+            return
     user = Bot_user.objects.get(user_id=update.message.chat.id)
     update.message.reply_text('Ваш баланс:\n\n{} сумм'.format(user.balance))
 
@@ -45,4 +52,11 @@ def cancel(update, context):
         return ConversationHandler.END
 
 def service_support(update, context):
+    bot = context.bot
+    # checking that conversition is in proccess or not
+    for dict in context.job_queue._dispatcher.persistence.conversations:
+        conv = context.job_queue._dispatcher.persistence.conversations[dict]
+        if conv[(update.message.chat.id, update.message.chat.id)] != None:
+            bot.delete_message(update.message.chat.id, update.message.message_id)
+            return
     update.message.reply_text('Если у вас возникли вопросы или проблемы, пожалуйста свяжитесь с администратором\n\n@Gleb_ForexMaster')

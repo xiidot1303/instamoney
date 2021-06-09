@@ -1,5 +1,5 @@
 from telegram import Bot
-from telegram.ext import Dispatcher, ConversationHandler
+from telegram.ext import Dispatcher, ConversationHandler, PicklePersistence
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from bot.main import *
 from bot.login import *
@@ -14,23 +14,15 @@ load_dotenv(os.path.join(basedir, '.env'))
 TOKEN = os.environ.get('TOKEN')
 WHERE = os.environ.get('WHERE')
 bot_obj = Bot(TOKEN)
+persistence = PicklePersistence(filename='filebot')
 if WHERE == 'SERVER':
     updater = 1213
-    dp = Dispatcher(bot_obj, None, workers=0, use_context=True)
+    dp = Dispatcher(bot_obj, None, workers=0, use_context=True, persistence=persistence)
 else:
-    updater = Updater(token=TOKEN, use_context=True)
+    
+    updater = Updater(token=TOKEN, use_context=True, persistence=persistence)
     dp = updater.dispatcher
 
-# delete un completed objects ones, after restart
-c_task = Completed_task.objects.filter(photo='')
-output = Output.objects.filter(price=None)
-user = Bot_user.objects.filter(birthday=None)
-for i in c_task:
-    i.delete()
-for i in output:
-    i.delete()
-for i in user:
-    i.delete()
 
 
 
@@ -45,6 +37,8 @@ login_handler = ConversationHandler(
 
     },
     fallbacks = [],
+    name='login',
+    persistent=True,
 )
 
 begin_task = ConversationHandler(
@@ -55,6 +49,8 @@ begin_task = ConversationHandler(
         SEND_PROOF_PHOTO: [MessageHandler(Filters.photo, send_proof_photo), MessageHandler(Filters.text(['Назад']), send_proof_photo)],
     }, 
     fallbacks = [CommandHandler('cancel', cancel)],
+    name='task',
+    persistent=True,
 )
 
 output_request = ConversationHandler(
@@ -64,6 +60,8 @@ output_request = ConversationHandler(
         SEND_OUTPUT_PRICE: [MessageHandler(Filters.text, send_output_price)],
     }, 
     fallbacks = [CommandHandler('cancel', cancel)],
+    name='output',
+    persistent=True,
     )
 
 dp.add_handler(CommandHandler('start', start))

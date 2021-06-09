@@ -9,6 +9,13 @@ import os
 
 def task_list(update, context):
     bot = context.bot
+    # checking that conversition is in proccess or not
+    for dict in context.job_queue._dispatcher.persistence.conversations:
+        conv = context.job_queue._dispatcher.persistence.conversations[dict]
+        if conv[(update.message.chat.id, update.message.chat.id)] != None and update.message.text != 'Назад':
+            bot.delete_message(update.message.chat.id, update.message.message_id)
+            return
+    bot = context.bot
 
     all_tasks = Task.objects.filter(is_open=True).order_by('pk')
     for i in Completed_task.objects.filter(user_id=update.message.chat.id):
@@ -124,12 +131,15 @@ def select_task(update, context):
 
 def send_proof(update, context):
     if update.message.text == 'Назад':
-        obj = Completed_task.objects.get(user_id=update.message.chat.id, photo='')
-        obj.delete()
+        try:
+            obj = Completed_task.objects.get(user_id=update.message.chat.id, photo='')
+            obj.delete()
+        except:
+            do = 0
         task_list(update, context)
         return SELECT_TASK
     
-    update.message.reply_text('Вам нужно доказательство того, что вы действительно выполнили свою заданию. Отправьте фото', reply_markup=ReplyKeyboardMarkup(keyboard=[['Назад']], resize_keyboard=True))
+    update.message.reply_text('Вам нужно доказательство того, что вы действительно выполнили своё задание. Отправьте фото', reply_markup=ReplyKeyboardMarkup(keyboard=[['Назад']], resize_keyboard=True))
     return SEND_PROOF_PHOTO
 
 def send_proof_photo(update, context):
@@ -155,8 +165,11 @@ def send_proof_photo(update, context):
         
     except:
         if update.message.text == 'Назад':
-            obj = Completed_task.objects.get(user_id=update.message.chat.id, photo='')
-            obj.delete()
+            try:
+                obj = Completed_task.objects.get(user_id=update.message.chat.id, photo='')
+                obj.delete()
+            except:
+                do = 0
             task_list(update, context)
             return SELECT_TASK
 
