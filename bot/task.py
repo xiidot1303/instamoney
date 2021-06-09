@@ -10,12 +10,14 @@ import os
 def task_list(update, context):
     bot = context.bot
     # checking that conversition is in proccess or not
-    for dict in context.job_queue._dispatcher.persistence.conversations:
-        conv = context.job_queue._dispatcher.persistence.conversations[dict]
-        if conv[(update.message.chat.id, update.message.chat.id)] != None and update.message.text != 'Назад':
-            bot.delete_message(update.message.chat.id, update.message.message_id)
-            return
-    bot = context.bot
+    try:
+        for dict in context.job_queue._dispatcher.persistence.conversations:
+            conv = context.job_queue._dispatcher.persistence.conversations[dict]
+            if conv[(update.message.chat.id, update.message.chat.id)] != None and update.message.text != 'Назад':
+                bot.delete_message(update.message.chat.id, update.message.message_id)
+                return
+    except:
+        do = 0
 
     all_tasks = Task.objects.filter(is_open=True).order_by('pk')
     for i in Completed_task.objects.filter(user_id=update.message.chat.id):
