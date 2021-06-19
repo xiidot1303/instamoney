@@ -2,7 +2,6 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton, I
 from telegram.ext import ConversationHandler
 from bot.conversationList import *
 from bot.functions import *
-
 from app.models import *
 from bot.functions import *
 from dotenv import load_dotenv
@@ -20,7 +19,7 @@ def start(update, context):
             bot = context.bot
             bot.delete_message(update.message.chat.id, update.message.message_id)
     else:
-        update.message.reply_text('Приветствую. Это бот для заработка в Инстаграмме. Тут будут появляться задания, выполнив которые вы будете получать вознаграждение. Цены за задания варируются от 200 до 1000 сумм. Минимальная сумма для вывода: 5000 сумм. Выводим на узкард. Успехов!', reply_markup=ReplyKeyboardMarkup(keyboard=[['продолжить']], resize_keyboard=True))
+        update.message.reply_text(get_word('welcome', update), reply_markup=ReplyKeyboardMarkup(keyboard=[[get_word('next', update)]], resize_keyboard=True))
 
 
 def balance(update, context):
@@ -35,7 +34,7 @@ def balance(update, context):
     except:
         do = 9
     user = Bot_user.objects.get(user_id=update.message.chat.id)
-    update.message.reply_text('Ваш баланс:\n\n{} сумм'.format(user.balance))
+    update.message.reply_text('{}:\n\n{} {}'.format(get_word('your balance', update), user.balance, get_word('summ', update)))
 
 def cancel(update, context):
     bot = context.bot
@@ -49,7 +48,7 @@ def cancel(update, context):
             i.delete()
         
 
-        get = update.message.reply_text('Нажмите /start для повторного входа в бота', reply_markup=ReplyKeyboardMarkup(keyboard=[['/start']], resize_keyboard=True))
+        get = update.message.reply_text(get_word('click start', update), reply_markup=ReplyKeyboardMarkup(keyboard=[['/start']], resize_keyboard=True))
         bot.delete_message(update.message.chat.id, get.message_id-2)
         bot.delete_message(update.message.chat.id, get.message_id-1)
         return ConversationHandler.END
@@ -66,4 +65,4 @@ def service_support(update, context):
                 return
     except:
         do = 0
-    update.message.reply_text('Если у вас возникли вопросы или проблемы, пожалуйста свяжитесь с администратором\n\n@Gleb_ForexMaster')
+    update.message.reply_text(get_word('support text', update))

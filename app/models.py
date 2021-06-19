@@ -8,6 +8,7 @@ class Bot_user(models.Model):
     balance = models.FloatField(null=True, blank=True, default=0)
     c_task = models.IntegerField(null=True, blank = True, default=0)
     date = models.DateTimeField(db_index = True, null=True, auto_now_add=True, blank=True)
+    lang = models.CharField(null=True, blank=True, max_length=5)
 
 
 class Task(models.Model):

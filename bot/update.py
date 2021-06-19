@@ -28,7 +28,7 @@ else:
 
 
 login_handler = ConversationHandler(
-    entry_points=[MessageHandler(Filters.text(['продолжить']), next_to_register)],
+    entry_points=[MessageHandler(Filters.text(['продолжить', 'davom etish']), next_to_register)],
     states={
         SEND_NAME: [MessageHandler(Filters.text, send_name)],
         SEND_CONTACT: [MessageHandler(Filters.contact, send_contact), MessageHandler(Filters.text, send_contact)],
@@ -42,11 +42,11 @@ login_handler = ConversationHandler(
 )
 
 begin_task = ConversationHandler(
-    entry_points = [MessageHandler(Filters.text(['Доступные задания 📝']), task_list)], 
+    entry_points = [MessageHandler(Filters.text(['Доступные задания 📝', 'Mavjud vazifalar 📝']), task_list)], 
     states = {
         SELECT_TASK: [CallbackQueryHandler(select_task)],
-        SEND_PROOF: [MessageHandler(Filters.text(['🏁☑️', 'Назад']), send_proof)],
-        SEND_PROOF_PHOTO: [MessageHandler(Filters.photo, send_proof_photo), MessageHandler(Filters.text(['Назад']), send_proof_photo)],
+        SEND_PROOF: [MessageHandler(Filters.text(['🏁☑️', 'Назад', 'Ortga']), send_proof)],
+        SEND_PROOF_PHOTO: [MessageHandler(Filters.photo, send_proof_photo), MessageHandler(Filters.text(['Назад', 'Ortga']), send_proof_photo)],
     }, 
     fallbacks = [CommandHandler('cancel', cancel)],
     name='task',
@@ -54,7 +54,7 @@ begin_task = ConversationHandler(
 )
 
 output_request = ConversationHandler(
-    entry_points = [MessageHandler(Filters.text(['Вывод 📥']), request_money)], 
+    entry_points = [MessageHandler(Filters.text(['Вывод 📥', 'Mablag\'ni yechib olish 📥']), request_money)], 
     states = {
         SEND_OUTPUT_DESCRIPTION: [MessageHandler(Filters.text, send_output_description)],
         SEND_OUTPUT_PRICE: [MessageHandler(Filters.text, send_output_price)],
@@ -68,6 +68,6 @@ dp.add_handler(CommandHandler('start', start))
 dp.add_handler(login_handler)
 dp.add_handler(begin_task)
 dp.add_handler(output_request)
-dp.add_handler(MessageHandler(Filters.text(['Баланс 💰']), balance))
-dp.add_handler(MessageHandler(Filters.text(['Служба поддержки ⚙️']), service_support))
+dp.add_handler(MessageHandler(Filters.text(['Баланс 💰', 'Balans 💰']), balance))
+dp.add_handler(MessageHandler(Filters.text(['Служба поддержки ⚙️', 'Yordam xizmati ⚙️']), service_support))
 dp.add_handler(CommandHandler('cancel', cancel))

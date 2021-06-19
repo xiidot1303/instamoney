@@ -33,3 +33,11 @@
         </div>
     </div>
 {% endblock %}
+
+
+{% block script %}
+<script>
+    var a = document.getElementById('id_description');
+    a.placeholder = 'выделить с помощью // \n\n "текст на узбекском" // "текст на русском"';
+</script>
+{% endblock %}

@@ -137,14 +137,14 @@ def sendmessage(request, issent):
             return redirect(sendmessage, issent='yes')
             
         else:
-            profiles = Bot_user.objects.all()
+            profiles = Bot_user.objects.all().exclude(birthday=None)
 
             context = {'form': bbf, 'profiles': profiles, 'issent': issent}
             return render(request, 'views/sendmessage.html', context)
 
     else:
         bbf = SendmessageForm()
-        profiles = Bot_user.objects.all()
+        profiles = Bot_user.objects.all().exclude(birthday=None)
 
         context = {'form': bbf, 'profiles': profiles, 'issent': issent}
         return render(request, 'views/sendmessage.html', context)    

@@ -13,7 +13,7 @@ def task_list(update, context):
     try:
         for dict in context.job_queue._dispatcher.persistence.conversations:
             conv = context.job_queue._dispatcher.persistence.conversations[dict]
-            if conv[(update.message.chat.id, update.message.chat.id)] != None and update.message.text != 'Назад':
+            if conv[(update.message.chat.id, update.message.chat.id)] != None and update.message.text != get_word('back', update):
                 bot.delete_message(update.message.chat.id, update.message.message_id)
                 return
     except:
@@ -31,13 +31,13 @@ def task_list(update, context):
             items.append([InlineKeyboardButton(text='➡️', callback_data='next_2')])
             break
     if len(items) == 0:
-        update.message.reply_text('На данный момент заданий нет, но скоро они появятся. Заходите раз в день и проверяйте о наличии заданий.')
+        update.message.reply_text(get_word('no tasks', update))
         return ConversationHandler.END
     
-    items.append([InlineKeyboardButton(text='Назад', callback_data='back')])
-    msg = bot.send_message(update.message.chat.id, 'Приступить к исполнению', reply_markup=ReplyKeyboardRemove(remove_keyboard=True))
+    items.append([InlineKeyboardButton(text=get_word('back', update), callback_data='back')])
+    msg = bot.send_message(update.message.chat.id, get_word('get started', update), reply_markup=ReplyKeyboardRemove(remove_keyboard=True))
     bot.delete_message(update.message.chat.id, msg.message_id)
-    bot.send_message(update.message.chat.id, 'Приступить к исполнению', reply_markup=InlineKeyboardMarkup(items))
+    bot.send_message(update.message.chat.id, get_word('get started', update), reply_markup=InlineKeyboardMarkup(items))
 
     #____create new obj
     Completed_task.objects.create(user_id=update.message.chat.id)
@@ -79,8 +79,8 @@ def select_task(update, context):
             pn = str(int(n) - 1)
             if pn != 0:
                 ls.append([InlineKeyboardButton(text='⬅️', callback_data='previous_{}'.format(pn)), InlineKeyboardButton(text=n, callback_data='index')])
-        ls.append([InlineKeyboardButton(text='Назад', callback_data='back')])
-        update.edit_message_text('Приступить к исполнению', reply_markup=InlineKeyboardMarkup(ls))
+        ls.append([InlineKeyboardButton(text=get_word('back', update), callback_data='back')])
+        update.edit_message_text(get_word('get started', update), reply_markup=InlineKeyboardMarkup(ls))
         return SELECT_TASK
     if 'previous' in data:
         ttt, n = data.split('_') # n is page number
@@ -104,9 +104,9 @@ def select_task(update, context):
             pn = str(int(n) - 1)
             if pn != 0:
                 ls.append([InlineKeyboardButton(text='⬅️', callback_data='previous_{}'.format(pn)), InlineKeyboardButton(text=n, callback_data='index')])
-        ls.append([InlineKeyboardButton(text='Назад', callback_data='back')])
+        ls.append([InlineKeyboardButton(text=get_word('back', update), callback_data='back')])
         
-        update.edit_message_text('Приступить к исполнению', reply_markup=InlineKeyboardMarkup(ls))
+        update.edit_message_text(get_word('get started', update), reply_markup=InlineKeyboardMarkup(ls))
         return SELECT_TASK
     
     #___________________________________________________________
@@ -114,7 +114,7 @@ def select_task(update, context):
 
     bot.delete_message(update.message.chat.id, update.message.message_id)
     task = Task.objects.get(pk=int(data))
-    text = task.description + '\n' + task.url + '\n\nЦена:' + str(task.price)
+    text = task.description + '\n' + task.url + '\n\n{}:'.format(get_word('price', update)) + str(task.price)
     #i_link = InlineKeyboardButton(text='Начать', url=task.url)
     if task.photo != '':
         try:
@@ -122,7 +122,7 @@ def select_task(update, context):
         except:
             qwqwq = 0
     bot.send_message(update.message.chat.id, text)
-    bot.send_message(update.message.chat.id, 'После выполнения задания, нажмите кнопку 🏁☑️', reply_markup=ReplyKeyboardMarkup(keyboard=[['🏁☑️'], ['Назад']], resize_keyboard=True))
+    bot.send_message(update.message.chat.id, get_word('after ending task', update), reply_markup=ReplyKeyboardMarkup(keyboard=[['🏁☑️'], [get_word('back', update)]], resize_keyboard=True))
 
     # set data
     obj = Completed_task.objects.get(user_id=update.message.chat.id, task=None)
@@ -132,7 +132,7 @@ def select_task(update, context):
 
 
 def send_proof(update, context):
-    if update.message.text == 'Назад':
+    if update.message.text == get_word('back', update):
         try:
             obj = Completed_task.objects.get(user_id=update.message.chat.id, photo='')
             obj.delete()
@@ -141,7 +141,7 @@ def send_proof(update, context):
         task_list(update, context)
         return SELECT_TASK
     
-    update.message.reply_text('Вам нужно доказательство того, что вы действительно выполнили своё задание. Отправьте фото', reply_markup=ReplyKeyboardMarkup(keyboard=[['Назад']], resize_keyboard=True))
+    update.message.reply_text(get_word('send proof', update), reply_markup=ReplyKeyboardMarkup(keyboard=[[get_word('back', update)]], resize_keyboard=True))
     return SEND_PROOF_PHOTO
 
 def send_proof_photo(update, context):
@@ -160,13 +160,13 @@ def send_proof_photo(update, context):
         d_photo = p.download('files/photos/completed_tasks/{}'.format(file_name))
         obj.photo = str(d_photo).replace('files/', '')
         obj.save()
-        update.message.reply_text('Задание на проверке и вы получите ответ после того, как администратор проверит задание.')
+        update.message.reply_text(get_word('end task', update))
         main_menu(update, context)
         return ConversationHandler.END
     
         
     except:
-        if update.message.text == 'Назад':
+        if update.message.text == get_word('back', update):
             try:
                 obj = Completed_task.objects.get(user_id=update.message.chat.id, photo='')
                 obj.delete()
