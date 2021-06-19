@@ -55,6 +55,8 @@ lang_dict = {
 
     'send number': ['Telefon raqamingizni yuboring', 'Оставьте свой номер телефона'],
 
+    'enter button': ['👇Tugmachani bosing👇', '👇Нажмите кнопку👇'],
+
     'number is logged': ['Bunday raqam bilan ro\'yxatdan o\'tilgan, boshqa telefon raqam kiriting', 
     'Этот номер уже зарегистрирован. Введите другой номер'],
 

@@ -19,8 +19,9 @@ def start(update, context):
             bot = context.bot
             bot.delete_message(update.message.chat.id, update.message.message_id)
     else:
+        Bot_user.objects.create(user_id=update.message.chat.id)
         update.message.reply_text(get_word('welcome', update), reply_markup=ReplyKeyboardMarkup(keyboard=[[get_word('next', update)]], resize_keyboard=True))
-
+        
 
 def balance(update, context):
     bot = context.bot
@@ -48,11 +49,12 @@ def cancel(update, context):
             i.delete()
         
 
-        get = update.message.reply_text(get_word('click start', update), reply_markup=ReplyKeyboardMarkup(keyboard=[['/start']], resize_keyboard=True))
+        get = update.message.reply_text('Qaytatdan kirish uchun /start tugmasini bosing\n\nНажмите /start для повторного входа в бота', reply_markup=ReplyKeyboardMarkup(keyboard=[['/start']], resize_keyboard=True))
         bot.delete_message(update.message.chat.id, get.message_id-2)
         bot.delete_message(update.message.chat.id, get.message_id-1)
         return ConversationHandler.END
-
+    else:
+        bot.delete_message(update.message.chat.id, update.message.message_id)
 def service_support(update, context):
     bot = context.bot
     # checking that conversition is in proccess or not

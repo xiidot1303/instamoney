@@ -2,7 +2,7 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton, I
 from telegram.ext import ConversationHandler
 from bot.conversationList import *
 from bot.functions import *
-
+from bot.main import cancel
 from app.models import *
 from bot.functions import *
 from dotenv import load_dotenv
@@ -32,7 +32,9 @@ def request_money(update, context):
     
 
 def send_output_description(update, context):
-    print(context.chat_data)
+    if update.message.text == '/cancel':
+        cancel(update, context)
+        return ConversationHandler.END
     
     if update.message.text == get_word('back', update):
         obj = Output.objects.get(user_id=update.message.chat.id, description=None)
@@ -46,6 +48,9 @@ def send_output_description(update, context):
     return SEND_OUTPUT_PRICE
 
 def send_output_price(update, context):
+    if update.message.text == '/cancel':
+        cancel(update, context)
+        return ConversationHandler.END
     if update.message.text == get_word('back', update):
         request_money(update, context)
         return SEND_OUTPUT_DESCRIPTION
