@@ -37,7 +37,8 @@ def send_contact(update, context):
 
 def send_birthday(update, context):
     try:
-        d, m, y = str(update.message.text).split('.')
+        # d, m, y = str(update.message.text).split('.')
+        l = list(map(int, str(update.message.text).split('.')))
         obj = Bot_user.objects.get(user_id=update.message.chat.id)
         obj.birthday = update.message.text
         obj.save()

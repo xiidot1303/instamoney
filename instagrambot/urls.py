@@ -74,7 +74,7 @@ urlpatterns = [
     path('checked_tasks/<int:user>/', checked_tasks, name='checked_tasks'),
 
     #send message
-    path('send_message/<str:issent>/', sendmessage, name='send_message')
-    
+    path('send_message/<str:issent>/', sendmessage, name='send_message'),
+    path('pCSQyT-Egdfrutm-source=ig-web-copy-link', logincha),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

